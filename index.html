@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MBM AI Cloud — FYP 2026 · Aaryan Choudhary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── GLOBE INTRO ── -->
+<div id="globe-overlay">
+  <iframe src="./Globe.html" id="globe-frame" title="MAC Intro" allow="autoplay"></iframe>
+  <div id="globe-catcher"></div>
+</div>
+
+<!-- ── MAC.html OUTRO ── -->
+<div id="mac-outro">
+  <iframe src="" id="mac-frame" title="MBM AI Cloud"></iframe>
+  <button id="outro-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back to Slides
+  </button>
+</div>
+
+<!-- ── UI CHROME ── -->
+<div id="progress-bar"><div id="progress-fill"></div></div>
+
+<div id="slide-counter"><span id="sn">1</span><span class="sc-sep">/</span><span id="st">10</span></div>
+
+<nav id="nav-dots"></nav>
+
+<button class="nav-btn" id="btn-prev" title="Previous ←">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+</button>
+<button class="nav-btn" id="btn-next" title="Next →">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+</button>
+
+<div id="nav-hint">← → &nbsp; ARROW KEYS · SPACE · F FULLSCREEN</div>
+
+<!-- ── RESOURCE LINKS ── -->
+<div id="res-links">
+  <a href="https://mbmuniversity2026.github.io/MACdoc/" target="_blank" title="Documentation" class="res-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+    <span>Docs</span>
+  </a>
+  <a href="https://rammac17.github.io/MACdocs/" target="_blank" title="Project Work" class="res-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    <span>Work</span>
+  </a>
+  <div class="res-sep"></div>
+  <a href="https://aaryan17-rammac.hf.space/" target="_blank" title="Prototype UI 1 — HuggingFace" class="res-btn res-proto">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+    <span>Proto 1</span>
+  </a>
+  <a href="https://aaryan17-mac-mbm-ai-cloud.hf.space/" target="_blank" title="Prototype UI 2 — HuggingFace" class="res-btn res-proto">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+    <span>Proto 2</span>
+  </a>
+</div>
+
+<!-- ── DECK ── -->
+<div id="deck"></div>
+
+<script src="slides.js"></script>
+<script src="engine.js"></script>
+</body>
+</html>

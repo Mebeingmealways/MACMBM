@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MBM → MAC</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:100%;height:100%;background:#0e0d0c;overflow:hidden}
+  #stage{position:fixed;inset:0}
+  /* winking emoji — Lottie, off-screen below, animates up after MAC dissolves */
+  #wink{
+    position:fixed;
+    left:50%;
+    top:50%;
+    width:min(46vmin,420px);
+    height:min(46vmin,420px);
+    transform:translate(-50%, 140vh) scale(0.6);
+    opacity:0;
+    will-change:transform,opacity;
+    pointer-events:none;
+    filter:drop-shadow(0 18px 40px rgba(0,0,0,0.55));
+  }
+  #wink.up{
+    transform:translate(-50%, -50%) scale(1);
+    opacity:1;
+    transition:
+      transform 1.05s cubic-bezier(.18,.9,.28,1.05),
+      opacity .55s ease-out .05s;
+  }
+  #wink.bye{
+    transform:translate(-50%, -50%) scale(0.9);
+    opacity:0;
+    transition:transform .8s cubic-bezier(.4,0,.7,.4), opacity .8s ease-in;
+  }
+  /* preload Devanagari face to avoid first-frame fallback */
+  #pre{position:fixed;left:-9999px;top:-9999px;font-family:'Noto Sans Devanagari',Mangal,sans-serif;font-weight:700}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<div id="wink" aria-hidden="true"></div>
+<div id="pre">मबएकलडनतपरसहवगजचशधभठटअआइईउओणञषऋ</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.4.0/pixi.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+<script id="wink-data" type="application/json">{"v":"5.5.7","fr":25,"ip":0,"op":41,"w":1500,"h":1500,"nm":"9_Winking Face","ddd":0,"assets":[],"layers":[{"ddd":0,"ind":1,"ty":3,"nm":"SIZE","sr":1,"ks":{"o":{"a":0,"k":0,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[749.695,696.9,0],"ix":2},"a":{"a":0,"k":[60,60,0],"ix":1},"s":{"a":0,"k":[650,650,100],"ix":6}},"ao":0,"ip":0,"op":41,"st":0,"bm":0},{"ddd":0,"ind":2,"ty":3,"nm":"Body CONTROL","parent":1,"sr":1,"ks":{"o":{"a":0,"k":0,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":1,"k":[{"i":{"x":0.43,"y":1},"o":{"x":0.57,"y":0},"t":0,"s":[60,60,0],"to":[0,0,0],"ti":[0,0,0]},{"i":{"x":0.43,"y":1},"o":{"x":0.57,"y":0},"t":9,"s":[60,49.1,0],"to":[0,0,0],"ti":[0,0,0]},{"i":{"x":0.43,"y":1},"o":{"x":0.57,"y":0},"t":15,"s":[60,65.6,0],"to":[0,0,0],"ti":[0,0,0]},{"i":{"x":0.43,"y":0.43},"o":{"x":0.167,"y":0.167},"t":23,"s":[60,60,0],"to":[0,0,0],"ti":[0,0,0]},{"i":{"x":0.43,"y":0.43},"o":{"x":0.167,"y":0.167},"t":24,"s":[60,60,0],"to":[0,0,0],"ti":[0,0,0]},{"t":47,"s":[60,60,0]}],"ix":2},"a":{"a":0,"k":[60,60,0],"ix":1},"s":{"a":1,"k":[{"i":{"x":[0.44,0.44,0.44],"y":[1,1,1]},"o":{"x":[0.56,0.56,0.56],"y":[0,0,0]},"t":0,"s":[100,100,100]},{"i":{"x":[0.44,0.44,0.44],"y":[1,1,1]},"o":{"x":[0.56,0.56,0.56],"y":[0,0,0]},"t":8,"s":[97.8,102,100]},{"i":{"x":[0.44,0.44,0.44],"y":[1,1,1]},"o":{"x":[0.56,0.56,0.56],"y":[0,0,0]},"t":14,"s":[102.7,98,100]},{"i":{"x":[0.833,0.833,0.833],"y":[1,1,1]},"o":{"x":[0.167,0.167,0.167],"y":[0,0,0]},"t":22,"s":[100,100,100]},{"i":{"x":[0.833,0.833,0.833],"y":[1,1,1]},"o":{"x":[0.167,0.167,0.167],"y":[0,0,0]},"t":24,"s":[100,100,100]},{"t":47,"s":[100,100,100]}],"ix":6}},"ao":0,"ip":0,"op":41,"st":0,"bm":0},{"ddd":0,"ind":3,"ty":3,"nm":"Face CONTROL","parent":8,"sr":1,"ks":{"o":{"a":0,"k":0,"ix":11},"r":{"a":1,"k":[{"i":{"x":[0.42],"y":[1]},"o":{"x":[0.58],"y":[0]},"t":0,"s":[0]},{"i":{"x":[0.42],"y":[1]},"o":{"x":[0.58],"y":[0]},"t":8,"s":[-5.6]},{"i":{"x":[0.42],"y":[1]},"o":{"x":[0.58],"y":[0]},"t":16,"s":[2.3]},{"i":{"x":[0.42],"y":[1]},"o":{"x":[0.167],"y":[0]},"t":22,"s":[0]},{"i":{"x":[0.833],"y":[1]},"o":{"x":[0.167],"y":[0]},"t":24,"s":[0]},{"t":47,"s":[0]}],"ix":10},"p":{"a":1,"k":[{"i":{"x":0.42,"y":1},"o":{"x":0.58,"y":0},"t":0,"s":[0,-55.6,0],"to":[0,0,0],"ti":[0,0,0]},{"i":{"x":0.42,"y":1},"o":{"x":0.58,"y":0},"t":8,"s":[0,-79,0],"to":[0,0,0],"ti":[0,0,0]},{"i":{"x":0.42,"y":1},"o":{"x":0.58,"y":0},"t":16,"s":[0,-35,0],"to":[0,0,0],"ti":[0,0,0]},{"i":{"x":0.42,"y":0.42},"o":{"x":0.167,"y":0.167},"t":22,"s":[0,-55.6,0],"to":[0,0,0],"ti":[0,0,0]},{"i":{"x":0.42,"y":0.42},"o":{"x":0.167,"y":0.167},"t":24,"s":[0,-55.6,0],"to":[0,0,0],"ti":[0,0,0]},{"t":47,"s":[0,-55.6,0]}],"ix":2},"a":{"a":0,"k":[60,60,0],"ix":1},"s":{"a":1,"k":[{"i":{"x":[0.42,0.42,0.42],"y":[1,1,1]},"o":{"x":[0.58,0.58,0.58],"y":[0,0,0]},"t":0,"s":[100,100,100]},{"i":{"x":[0.42,0.42,0.42],"y":[1,1,1]},"o":{"x":[0.58,0.58,0.58],"y":[0,0,0]},"t":8,"s":[103.3,103.3,100]},{"i":{"x":[0.42,0.42,0.42],"y":[1,1,1]},"o":{"x":[0.58,0.58,0.58],"y":[0,0,0]},"t":16,"s":[98.9,98.9,100]},{"i":{"x":[0.42,0.42,0.42],"y":[1,1,1]},"o":{"x":[0.167,0.167,0.167],"y":[0,0,0]},"t":22,"s":[100,100,100]},{"i":{"x":[0.833,0.833,0.833],"y":[1,1,1]},"o":{"x":[0.167,0.167,0.167],"y":[0,0,0]},"t":24,"s":[100,100,100]},{"t":47,"s":[100,100,100]}],"ix":6}},"ao":0,"ip":0,"op":41,"st":0,"bm":0},{"ddd":0,"ind":5,"ty":4,"nm":"Light","parent":6,"sr":1,"ks":{"o":{"a":0,"k":70,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,0,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[127.932,127.932],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse","hd":false},{"ty":"gf","o":{"a":0,"k":100,"ix":10},"r":1,"bm":0,"g":{"p":3,"k":{"a":0,"k":[0,1,1,1,0.5,1,1,1,1,1,1,1,0,1,0.361,0.5,1,0],"ix":9}},"s":{"a":0,"k":[0.744,-64.67],"ix":5},"e":{"a":0,"k":[0.658,-9.553],"ix":6},"t":1,"nm":"Gradient Fill 1","mn":"ADBE Vector Graphic - G-Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,-0.5],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 2","np":3,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":41,"st":0,"bm":16},{"ddd":0,"ind":6,"ty":4,"nm":"Face","parent":2,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":1,"k":[{"i":{"x":[0.4],"y":[1]},"o":{"x":[0.6],"y":[0]},"t":0,"s":[0]},{"i":{"x":[0.4],"y":[1]},"o":{"x":[0.6],"y":[0]},"t":10,"s":[-3.5]},{"i":{"x":[0.4],"y":[1]},"o":{"x":[0.306],"y":[0]},"t":18,"s":[1]},{"i":{"x":[0.4],"y":[1]},"o":{"x":[0.167],"y":[0]},"t":24,"s":[0]},{"t":47,"s":[0]}],"ix":10},"p":{"a":1,"k":[{"i":{"x":0.4,"y":1},"o":{"x":0.6,"y":0},"t":0,"s":[59.695,73.4,0],"to":[0,0,0],"ti":[0,0,0]},{"i":{"x":0.4,"y":1},"o":{"x":0.6,"y":0},"t":10,"s":[59.695,77.6,0],"to":[0,0,0],"ti":[0,0,0]},{"i":{"x":0.4,"y":1},"o":{"x":0.306,"y":0},"t":18,"s":[59.695,70.7,0],"to":[0,0,0],"ti":[0,0,0]},{"i":{"x":0.4,"y":0.4},"o":{"x":0.167,"y":0.167},"t":24,"s":[59.695,73.4,0],"to":[0,0,0],"ti":[0,0,0]},{"t":47,"s":[59.695,73.4,0]}],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ty":"gr","it":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":1,"k":[{"i":{"x":0.833,"y":1},"o":{"x":0.167,"y":0},"t":0,"s":[{"i":[[3.013,-0.283],[1.411,-3.83],[-1.015,1.992],[-6.731,1.082]],"o":[[-17.909,1.683],[-0.841,2.284],[3.125,-6.13],[3.831,-0.616]],"v":[[-26.411,-32.66],[-50.089,-12.347],[-47.205,-10.905],[-27.253,-28.453]],"c":true}]},{"i":{"x":0.292,"y":1},"o":{"x":0.515,"y":0},"t":8,"s":[{"i":[[3.013,-0.283],[1.411,-3.83],[-1.015,1.992],[-6.731,1.082]],"o":[[-17.909,1.683],[-0.841,2.284],[3.125,-6.13],[3.831,-0.616]],"v":[[-26.274,-26.16],[-49.952,-5.847],[-47.067,-4.405],[-27.115,-21.953]],"c":true}]},{"i":{"x":0.292,"y":1},"o":{"x":0.167,"y":0},"t":16,"s":[{"i":[[3.013,-0.283],[1.411,-3.83],[-1.015,1.992],[-6.731,1.082]],"o":[[-17.909,1.683],[-0.841,2.284],[3.125,-6.13],[3.831,-0.616]],"v":[[-26.411,-32.66],[-50.089,-12.347],[-47.205,-10.905],[-27.253,-28.453]],"c":true}]},{"t":47,"s":[{"i":[[3.013,-0.283],[1.411,-3.83],[-1.015,1.992],[-6.731,1.082]],"o":[[-17.909,1.683],[-0.841,2.284],[3.125,-6.13],[3.831,-0.616]],"v":[[-26.411,-32.66],[-50.089,-12.347],[-47.205,-10.905],[-27.253,-28.453]],"c":true}]}],"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ind":1,"ty":"sh","ix":2,"ks":{"a":1,"k":[{"i":{"x":0.261,"y":1},"o":{"x":0.535,"y":0},"t":0,"s":[{"i":[[2.316,1.948],[3.836,-1.705],[-2.184,0.477],[-8.666,-5.437]],"o":[[-14.184,-11.926],[-2.224,0.988],[6.722,-1.467],[2.809,1.762]],"v":[[52.169,-7.574],[19.774,-13.67],[20.339,-9.397],[49.526,-4.563]],"c":true}]},{"i":{"x":0.19,"y":1},"o":{"x":0.603,"y":0},"t":7,"s":[{"i":[[1.642,2.542],[5.581,-0.191],[-2.21,-0.335],[-5.857,-7.935]],"o":[[-9.809,-15.184],[-2.432,0.083],[6.803,1.031],[1.969,2.668]],"v":[[48.987,-20.074],[23.322,-35.609],[22.108,-31.9],[45.505,-18.718]],"c":true}]},{"i":{"x":0.417,"y":1},"o":{"x":0.58,"y":0},"t":16,"s":[{"i":[[2.316,1.948],[3.836,-1.705],[-2.184,0.477],[-8.666,-5.437]],"o":[[-14.184,-11.926],[-2.224,0.988],[6.722,-1.467],[2.809,1.762]],"v":[[52.085,-5.574],[19.69,-11.67],[20.256,-7.397],[49.442,-2.563]],"c":true}]},{"i":{"x":0.417,"y":1},"o":{"x":0.167,"y":0},"t":22,"s":[{"i":[[2.316,1.948],[3.836,-1.705],[-2.184,0.477],[-8.666,-5.437]],"o":[[-14.184,-11.926],[-2.224,0.988],[6.722,-1.467],[2.809,1.762]],"v":[[52.169,-7.574],[19.774,-13.67],[20.339,-9.397],[49.526,-4.563]],"c":true}]},{"t":47,"s":[{"i":[[2.316,1.948],[3.836,-1.705],[-2.184,0.477],[-8.666,-5.437]],"o":[[-14.184,-11.926],[-2.224,0.988],[6.722,-1.467],[2.809,1.762]],"v":[[52.169,-7.574],[19.774,-13.67],[20.339,-9.397],[49.526,-4.563]],"c":true}]}],"ix":2},"nm":"Path 7","mn":"ADBE Vector Shape - Group","hd":false},{"ind":2,"ty":"sh","ix":3,"ks":{"a":1,"k":[{"i":{"x":0.261,"y":1},"o":{"x":0.517,"y":0},"t":0,"s":[{"i":[[6.812,0.197],[-3.119,-6.157],[-8.892,-0.051],[-0.898,2.651]],"o":[[-6.048,-0.175],[1.685,3.326],[8.86,0.051],[1.666,-4.914]],"v":[[26.711,2.442],[11.55,11.799],[27.002,11.551],[41.134,11.349]],"c":true}]},{"i":{"x":0.19,"y":1},"o":{"x":0.603,"y":0},"t":6,"s":[{"i":[[5.466,0.088],[0.128,-7.188],[-6.726,-0.146],[0.106,5.399]],"o":[[-6.544,-0.105],[-0.07,3.91],[6.543,0.142],[-0.132,-6.704]],"v":[[23.029,-15.27],[14.732,1.657],[22.524,18.049],[30.754,1.334]],"c":true}]},{"i":{"x":0.417,"y":1},"o":{"x":0.58,"y":0},"t":15,"s":[{"i":[[6.812,0.197],[-3.119,-6.157],[-8.892,-0.051],[-0.898,2.651]],"o":[[-6.048,-0.175],[1.685,3.326],[8.86,0.051],[1.666,-4.914]],"v":[[26.813,6.942],[11.55,13.549],[27.002,13.301],[41.134,13.099]],"c":true}]},{"i":{"x":0.417,"y":1},"o":{"x":0.167,"y":0},"t":21,"s":[{"i":[[6.812,0.197],[-3.119,-6.157],[-8.892,-0.051],[-0.898,2.651]],"o":[[-6.048,-0.175],[1.685,3.326],[8.86,0.051],[1.666,-4.914]],"v":[[26.711,2.442],[11.55,11.799],[27.002,11.551],[41.134,11.349]],"c":true}]},{"t":47,"s":[{"i":[[6.812,0.197],[-3.119,-6.157],[-8.892,-0.051],[-0.898,2.651]],"o":[[-6.048,-0.175],[1.685,3.326],[8.86,0.051],[1.666,-4.914]],"v":[[26.711,2.442],[11.55,11.799],[27.002,11.551],[41.134,11.349]],"c":true}]}],"ix":2},"nm":"Path 6","mn":"ADBE Vector Shape - Group","hd":false},{"ind":3,"ty":"sh","ix":4,"ks":{"a":1,"k":[{"i":{"x":0.465,"y":1},"o":{"x":0.167,"y":0},"t":0,"s":[{"i":[[5.466,0.068],[0.128,-5.568],[-6.726,-0.113],[0.106,4.182]],"o":[[-6.544,-0.082],[-0.07,3.029],[6.543,0.11],[-0.132,-5.193]],"v":[[-21.471,-7.918],[-29.768,5.193],[-21.976,17.89],[-13.746,4.943]],"c":true}]},{"i":{"x":0.214,"y":1},"o":{"x":0.4,"y":0},"t":8,"s":[{"i":[[5.466,0.059],[0.128,-4.791],[-6.726,-0.097],[0.106,3.599]],"o":[[-6.544,-0.07],[-0.07,2.607],[6.543,0.094],[-0.132,-4.469]],"v":[[-21.471,-4.305],[-29.768,6.978],[-21.976,17.906],[-13.746,6.763]],"c":true}]},{"i":{"x":0.214,"y":1},"o":{"x":0.167,"y":0},"t":16,"s":[{"i":[[5.466,0.068],[0.128,-5.568],[-6.726,-0.113],[0.106,4.182]],"o":[[-6.544,-0.082],[-0.07,3.029],[6.543,0.11],[-0.132,-5.193]],"v":[[-21.471,-7.918],[-29.768,5.193],[-21.976,17.89],[-13.746,4.943]],"c":true}]},{"t":47,"s":[{"i":[[5.466,0.068],[0.128,-5.568],[-6.726,-0.113],[0.106,4.182]],"o":[[-6.544,-0.082],[-0.07,3.029],[6.543,0.11],[-0.132,-5.193]],"v":[[-21.471,-7.918],[-29.768,5.193],[-21.976,17.89],[-13.746,4.943]],"c":true}]}],"ix":2},"nm":"Path 5","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"tr","p":{"a":0,"k":[-0.63,-14.723],"ix":2},"a":{"a":0,"k":[-0.63,-30.245],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 2","np":4,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false},{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[11.804,0.11],[-1.939,-4.371],[-8.037,-0.084],[-3.819,10.213]],"o":[[-11.981,-0.111],[3.253,7.334],[8.095,0.085],[0.94,-2.514]],"v":[[-0.247,57.136],[-20.088,53.433],[-0.605,66.707],[20.033,52.047]],"c":true},"ix":2},"nm":"Path 2","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"tr","p":{"a":0,"k":[-0.549,35.907],"ix":2},"a":{"a":0,"k":[-0.549,39.145],"ix":1},"s":{"a":0,"k":[104.6,114.6],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":1,"cix":2,"bm":0,"ix":2,"mn":"ADBE Vector Group","hd":false},{"ty":"tr","p":{"a":0,"k":[-0.549,16.288],"ix":2,"x":"var $bm_rt;\n$bm_rt = $bm_sum(value, $bm_div(thisComp.layer('Face CONTROL').transform.position, 3.33));"},"a":{"a":0,"k":[-0.549,16.288],"ix":1},"s":{"a":0,"k":[100,100],"ix":3,"x":"var $bm_rt;\n$bm_rt = $bm_sub($bm_sum(value, thisComp.layer('Face CONTROL').transform.scale), [\n    100,\n    100\n]);"},"r":{"a":0,"k":0,"ix":6,"x":"var $bm_rt;\n$bm_rt = $bm_sum(value, thisComp.layer('Face CONTROL').transform.rotation);"},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Group 1","np":2,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false},{"ind":1,"ty":"sh","ix":2,"ks":{"a":0,"k":{"i":[[-39.994,0],[0,-39.994],[39.994,0],[0,39.994]],"o":[[39.994,0],[0,39.994],[-39.994,0],[0,-39.994]],"v":[[0,-72.416],[72.416,0],[0,72.416],[-72.416,0]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"gf","o":{"a":0,"k":100,"ix":10},"r":1,"bm":0,"g":{"p":3,"k":{"a":0,"k":[0.662,1,0.843,0.212,0.857,0.904,0.641,0.114,0.982,0.808,0.439,0.016],"ix":9}},"s":{"a":0,"k":[0.744,-13.84],"ix":5},"e":{"a":0,"k":[0.658,65.297],"ix":6},"t":2,"h":{"a":0,"k":0,"ix":7},"a":{"a":0,"k":0,"ix":8},"nm":"123","mn":"ADBE Vector Graphic - G-Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0.666,-1.301],"ix":2},"a":{"a":0,"k":[0.666,-0.801],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":3,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":41,"st":0,"bm":0},{"ddd":0,"ind":7,"ty":4,"nm":"Dark_Base","parent":6,"sr":1,"ks":{"o":{"a":0,"k":100,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[0,0,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"ind":0,"ty":"sh","ix":1,"ks":{"a":0,"k":{"i":[[-39.994,0],[0,-39.994],[39.994,0],[0,39.994]],"o":[[39.994,0],[0,39.994],[-39.994,0],[0,-39.994]],"v":[[0,-72.416],[72.416,0],[0,72.416],[-72.416,0]],"c":true},"ix":2},"nm":"Path 1","mn":"ADBE Vector Shape - Group","hd":false},{"ty":"fl","c":{"a":0,"k":[0.341176470588,0.160784313725,0.027450980392,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"bm":0,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[0,-0.5],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":3,"cix":2,"bm":0,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":41,"st":0,"bm":0},{"ddd":0,"ind":8,"ty":3,"nm":"Zero_Face CONTROL","parent":6,"sr":1,"ks":{"o":{"a":0,"k":0,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[-0.479,15.9,0],"ix":2},"a":{"a":0,"k":[0,0,0],"ix":1},"s":{"a":0,"k":[30,30,100],"ix":6}},"ao":0,"ip":0,"op":41,"st":0,"bm":0}],"markers":[{"tm":40,"cm":"1","dr":0}]}</script>
+<script>
+/* ─────────────────────────────────────────────────────────────────
+   PixiJS-based MBM → MAC morph
+   - Glyphs are pre-rendered ONCE into textures (sprite atlas)
+   - Each particle is a Sprite (GPU transform + tint) — no per-frame
+     canvas text draws → renders 1000+ glyphs at 60fps with ease.
+   ───────────────────────────────────────────────────────────────── */
+
+const CHARS = ['म','ब','ए','क','ल','ड','न','त','प','र','स','ह','व','ग','ज','च','श','ध','भ','ठ','ट','अ','आ','इ','ई','उ','ओ','ण','ञ','ष','ऋ','ख','घ','छ','झ','थ','फ','य'];
+
+const COL_WHITE  = 0xE8E6E1;
+const COL_PINK   = 0xE73C96;
+const COL_ACCENT = 0xD97449;
+
+/* sRGB lerp helpers (channel-wise) */
+function lerpHex(a,b,t){
+  const ar=(a>>16)&255, ag=(a>>8)&255, ab=a&255;
+  const br=(b>>16)&255, bg=(b>>8)&255, bb=b&255;
+  const r=Math.round(ar+(br-ar)*t);
+  const g=Math.round(ag+(bg-ag)*t);
+  const bl=Math.round(ab+(bb-ab)*t);
+  return (r<<16)|(g<<8)|bl;
+}
+
+/* Wait for the Devanagari font to settle so glyph textures bake correctly */
+async function ready(){ try{ await document.fonts.ready; }catch(e){} }
+
+/* Build a small Pixi texture for one glyph */
+function makeGlyphTexture(ch, fontPx){
+  const pad = Math.ceil(fontPx*0.25);
+  const size = fontPx + pad*2;
+  const cv = document.createElement('canvas');
+  cv.width = cv.height = size;
+  const c = cv.getContext('2d');
+  c.font = `700 ${fontPx}px 'Noto Sans Devanagari','Mangal','Kokila','Arial Unicode MS',sans-serif`;
+  c.textAlign='center'; c.textBaseline='middle';
+  c.fillStyle='#ffffff';   // WHITE — we tint at runtime
+  c.fillText(ch, size/2, size/2);
+  return PIXI.Texture.from(cv);
+}
+
+/* Sample a text outline into target points by rasterising offscreen */
+function samplePoints(text, fontPx, W, H, step){
+  const cv = document.createElement('canvas');
+  cv.width = W; cv.height = H;
+  const c = cv.getContext('2d');
+  c.fillStyle='#fff';
+  c.font = `900 ${fontPx}px Georgia,"Times New Roman",serif`;
+  c.textAlign='center'; c.textBaseline='middle';
+  c.fillText(text, W/2, H/2);
+  const d = c.getImageData(0,0,W,H).data;
+  const pts=[];
+  for(let y=0;y<H;y+=step)
+    for(let x=0;x<W;x+=step)
+      if(d[(y*W+x)*4+3] > 120) pts.push({x,y});
+  return pts;
+}
+function resample(pts, n){
+  const r=[], s=pts.length/n;
+  for(let i=0;i<n;i++) r.push(pts[Math.floor(i*s)%pts.length]);
+  return r;
+}
+
+(async function start(){
+  await ready();
+
+  /* ─── Pixi app ─── */
+  const app = new PIXI.Application({
+    resizeTo: window,
+    background: 0x0e0d0c,
+    antialias: true,
+    autoDensity: true,
+    resolution: Math.min(window.devicePixelRatio||1, 2),
+    powerPreference: 'high-performance',
+  });
+  document.getElementById('stage').appendChild(app.view);
+
+  let W = app.renderer.width  / app.renderer.resolution;
+  let H = app.renderer.height / app.renderer.resolution;
+
+  /* ─── Glyph textures (cached once) ─── */
+  const GLYPH_PX = 64;
+  const textures = CHARS.map(ch => makeGlyphTexture(ch, GLYPH_PX));
+
+  /* ─── Big text target points ─── */
+  const fontPx = Math.round(Math.min(W*0.34, H*0.55));
+  const step   = Math.max(3, Math.round(fontPx/45));
+  let mbmPts = samplePoints('MBM', fontPx, W|0, H|0, step);
+  let macPts = samplePoints('MAC', fontPx, W|0, H|0, step);
+  const N = Math.min(1400, Math.max(700, Math.round((mbmPts.length+macPts.length)/2)));
+  mbmPts = resample(mbmPts, N);
+  macPts = resample(macPts, N);
+
+  /* ─── Particle container (cacheAsBitmap off; we tint per-sprite) ─── */
+  const layer = new PIXI.Container();
+  app.stage.addChild(layer);
+
+  /* Render scale: how big each glyph appears on screen, relative to texture */
+  const scaleBase = (fontPx*0.07) / GLYPH_PX;  // ≈ small floating glyphs
+
+  const particles = [];
+  for(let i=0;i<N;i++){
+    const tex = textures[(Math.random()*textures.length)|0];
+    const sp  = new PIXI.Sprite(tex);
+    sp.anchor.set(0.5);
+    const s = scaleBase * (0.85 + Math.random()*0.6);
+    sp.scale.set(s);
+
+    const ang  = Math.random()*Math.PI*2;
+    const dist = Math.max(W,H)*0.55 + Math.random()*Math.max(W,H)*0.25;
+    sp.x = W/2 + Math.cos(ang)*dist;
+    sp.y = H/2 + Math.sin(ang)*dist;
+    sp.rotation = (Math.random()-0.5)*1.6;
+    sp.alpha = 0;
+    sp.tint  = COL_WHITE;
+
+    particles.push({
+      sp,
+      a: mbmPts[i], b: macPts[i],
+      vx: (Math.random()-0.5)*9,
+      vy: (Math.random()-0.5)*9,
+      rv: (Math.random()-0.5)*0.12,
+      k:  0.060 + Math.random()*0.030,
+      f:  0.78  + Math.random()*0.07,
+      delay: Math.random()*40,
+      ph: 0, ct: 0, mt: 0,
+      md: Math.random()*22,
+    });
+
+    layer.addChild(sp);
+  }
+
+  /* ─── State machine ─── */
+  let frame = 0, phase = 0, pf = 0;
+  let morphing = false, mFrame = 0;
+  let avgM = 0;
+  let dissolving = false, da = 1;
+
+  app.ticker.maxFPS = 60;
+  app.ticker.add(() => {
+    if(dissolving){
+      /* Dissolve: particles drift up, alpha bleeds out */
+      da -= 0.018;
+      for(const p of particles){
+        p.vx += (Math.random()-0.5)*1.0;
+        p.vy -= 0.28 + Math.random()*0.42;
+        p.sp.x += p.vx; p.sp.y += p.vy;
+        p.sp.rotation += 0.07;
+        p.sp.alpha = Math.max(0, da*0.8);
+      }
+      if(da <= 0){
+        app.ticker.stop();
+        layer.visible = false;
+        if(!window.__winkShown){ window.__winkShown = true; showWink(); }
+      }
+      return;
+    }
+
+    let settled = 0;
+    let mtSum = 0;
+
+    for(const p of particles){
+      if(frame < p.delay){ continue; }
+
+      p.ph = Math.min(1, p.ph + 0.035);
+      if(morphing && mFrame > p.md) p.mt = Math.min(1, p.mt + 0.055);
+
+      const tx = p.a.x + (p.b.x - p.a.x) * p.mt;
+      const ty = p.a.y + (p.b.y - p.a.y) * p.mt;
+
+      p.vx = (p.vx + (tx - p.sp.x) * p.k) * p.f;
+      p.vy = (p.vy + (ty - p.sp.y) * p.k) * p.f;
+      p.sp.x += p.vx;  p.sp.y += p.vy;
+      p.sp.rotation += p.rv;  p.rv *= 0.88;
+      p.sp.rotation *= (1 - p.mt*0.04);  // straighten as we settle into final shape
+
+      p.ct = Math.min(1, p.ct + 0.012);
+
+      /* Tint progression: white → pink → accent, driven by global morph t */
+      let tint;
+      if(avgM < 0.15)       tint = lerpHex(COL_WHITE, COL_PINK, Math.min(1, p.ct*1.8));
+      else if(avgM < 0.85)  tint = lerpHex(COL_PINK, COL_ACCENT, (avgM - 0.15)/0.7);
+      else                  tint = COL_ACCENT;
+      p.sp.tint = tint;
+      p.sp.alpha = 0.38 + p.ph*0.62;
+
+      mtSum += p.mt;
+      const dx = p.sp.x - tx, dy = p.sp.y - ty;
+      if(dx*dx + dy*dy < 4 && Math.abs(p.vx) < 0.6) settled++;
+    }
+
+    avgM = mtSum / N;
+
+    /* Phase logic */
+    if(phase === 0){            // forming MBM
+      if(settled > N*0.80){ phase = 1; pf = 0; }
+    } else if(phase === 1){     // hold MBM
+      if(++pf > 40){ phase = 2; morphing = true; pf = 0; }
+    } else if(phase === 2){     // morph
+      pf++;
+      if(avgM > 0.96){ phase = 3; pf = 0; }
+    } else if(phase === 3){     // hold MAC
+      if(++pf > 55){ phase = 4; dissolving = true; }
+    }
+    if(morphing) mFrame++;
+    frame++;
+  });
+
+  /* ─── Wink emoji entrance ─── */
+  function showWink(){
+    const el = document.getElementById('wink');
+    const data = JSON.parse(document.getElementById('wink-data').textContent);
+    const anim = lottie.loadAnimation({
+      container: el,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      animationData: data,
+    });
+    /* trigger rise on next frame so the transition catches */
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      el.classList.add('up');
+    }));
+  }
+
+  /* ─── Resize ─── */
+  addEventListener('resize', ()=>{
+    W = app.renderer.width  / app.renderer.resolution;
+    H = app.renderer.height / app.renderer.resolution;
+  });
+})();
+</script>
+</body>
+</html>
